@@ -68,7 +68,8 @@ class TabelPekerjaansTable
                     ->modalSubmitActionLabel('Save Changes')
                     ->modalCancelActionLabel('Cancel')
                     ->successNotificationTitle('Pekerjaan updated successfully!')
-                    ->after(fn () => redirect()->to(TabelPekerjaanResource::getUrl('index'))),
+                    ->after(fn () => redirect()->to(TabelPekerjaanResource::getUrl('index')))
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-pekerjaan.edit') ?? false),
                 DeleteAction::make()
                     ->label('Delete')
                     ->icon('heroicon-m-trash')
@@ -77,7 +78,8 @@ class TabelPekerjaansTable
                     ->modalHeading('Delete Pekerjaan')
                     ->modalDescription('Are you sure you want to delete this pekerjaan? This action cannot be undone.')
                     ->modalSubmitActionLabel('Yes, delete it')
-                    ->modalCancelActionLabel('Cancel'),
+                    ->modalCancelActionLabel('Cancel')
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-pekerjaan.delete') ?? false),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -89,7 +91,8 @@ class TabelPekerjaansTable
                         ->modalHeading('Delete Selected Pekerjaans')
                         ->modalDescription('Are you sure you want to delete the selected pekerjaans? This action cannot be undone.')
                         ->modalSubmitActionLabel('Yes, delete them')
-                        ->modalCancelActionLabel('Cancel'),
+                        ->modalCancelActionLabel('Cancel')
+                        ->visible(fn () => auth()->user()?->hasPermission('tabel-pekerjaan.delete') ?? false),
                 ]),
             ]);
     }

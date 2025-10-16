@@ -102,4 +102,33 @@ class TabelPekerjaanResource extends Resource
             // 'edit' => EditTabelPekerjaan::route('/{record}/edit'), // Commented out - using modal instead
         ];
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-pekerjaan.view') ?? false;
+    }
+
+    public static function canViewAny(): bool
+    {
+        return static::shouldRegisterNavigation();
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-pekerjaan.create') ?? false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-pekerjaan.edit') ?? false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-pekerjaan.delete') ?? false;
+    }
 }

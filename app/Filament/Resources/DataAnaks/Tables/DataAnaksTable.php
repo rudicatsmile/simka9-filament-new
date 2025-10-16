@@ -19,11 +19,13 @@ class DataAnaksTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->visible(fn () => auth()->user()?->hasPermission('data-anaks.edit') ?? false),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->visible(fn () => auth()->user()?->hasPermission('data-anaks.delete') ?? false),
                 ]),
             ]);
     }

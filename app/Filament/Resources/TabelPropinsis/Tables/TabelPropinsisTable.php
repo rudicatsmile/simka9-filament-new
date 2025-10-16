@@ -52,7 +52,8 @@ class TabelPropinsisTable
                     ->modalSubmitActionLabel('Save Changes')
                     ->modalCancelActionLabel('Cancel')
                     ->successNotificationTitle('Propinsi updated successfully!')
-                    ->after(fn () => redirect()->to(TabelPropinsiResource::getUrl('index'))),
+                    ->after(fn () => redirect()->to(TabelPropinsiResource::getUrl('index')))
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-propinsis.edit') ?? false),
                 DeleteAction::make()
                     ->label('Delete')
                     ->icon('heroicon-m-trash')
@@ -61,7 +62,8 @@ class TabelPropinsisTable
                     ->modalHeading('Delete Propinsi')
                     ->modalDescription('Are you sure you want to delete this propinsi? This action cannot be undone.')
                     ->modalSubmitActionLabel('Yes, delete it')
-                    ->modalCancelActionLabel('Cancel'),
+                    ->modalCancelActionLabel('Cancel')
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-propinsis.delete') ?? false),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -73,7 +75,8 @@ class TabelPropinsisTable
                         ->modalHeading('Delete Selected Propinsi')
                         ->modalDescription('Are you sure you want to delete the selected propinsi? This action cannot be undone.')
                         ->modalSubmitActionLabel('Yes, delete them')
-                        ->modalCancelActionLabel('Cancel'),
+                        ->modalCancelActionLabel('Cancel')
+                        ->visible(fn () => auth()->user()?->hasPermission('tabel-propinsis.delete') ?? false),
                 ]),
             ]);
     }

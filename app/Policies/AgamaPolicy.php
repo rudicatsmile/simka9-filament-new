@@ -13,7 +13,7 @@ class AgamaPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasPermission('agamas.view');
     }
 
     /**
@@ -21,7 +21,7 @@ class AgamaPolicy
      */
     public function view(User $user, Agama $agama): bool
     {
-        return true;
+        return $user->hasPermission('agamas.view');
     }
 
     /**
@@ -29,7 +29,7 @@ class AgamaPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasPermission('agamas.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class AgamaPolicy
      */
     public function update(User $user, Agama $agama): bool
     {
-        return true;
+        return $user->hasPermission('agamas.edit');
     }
 
     /**
@@ -45,7 +45,7 @@ class AgamaPolicy
      */
     public function delete(User $user, Agama $agama): bool
     {
-        return true;
+        return $user->hasPermission('agamas.delete');
     }
 
     /**
@@ -53,7 +53,7 @@ class AgamaPolicy
      */
     public function restore(User $user, Agama $agama): bool
     {
-        return true;
+        return $user->hasPermission('agamas.delete');
     }
 
     /**
@@ -61,6 +61,6 @@ class AgamaPolicy
      */
     public function forceDelete(User $user, Agama $agama): bool
     {
-        return true;
+        return $user->hasPermission('agamas.delete');
     }
 }

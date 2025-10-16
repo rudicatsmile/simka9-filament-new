@@ -14,6 +14,7 @@ class ListTabelHubunganKeluargas extends ListRecords
     {
         return [
             CreateAction::make()
+                ->visible(fn () => auth()->user()?->hasPermission('tabel-hubungan-keluargas.create') ?? false)
                 ->label('Add Hubungan Keluarga')
                 ->icon('heroicon-m-plus')
                 ->color('primary')

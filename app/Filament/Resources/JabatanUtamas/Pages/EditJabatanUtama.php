@@ -13,7 +13,8 @@ class EditJabatanUtama extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->visible(fn() => auth()->user()?->hasPermission('jabatan-utamas.delete') ?? false),
         ];
     }
 }

@@ -50,4 +50,33 @@ class UnitKerjaResource extends Resource
             // 'edit' => EditUnitKerja::route('/{record}/edit'), // Commented out - using modal instead
         ];
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('unit-kerja.view') ?? false;
+    }
+
+    public static function canViewAny(): bool
+    {
+        return static::shouldRegisterNavigation();
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('unit-kerja.create') ?? false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('unit-kerja.edit') ?? false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('unit-kerja.delete') ?? false;
+    }
 }

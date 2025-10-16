@@ -50,4 +50,33 @@ class TabelGolonganDarahResource extends Resource
             // 'edit' => EditTabelGolonganDarah::route('/{record}/edit'), // Commented out - using modal instead
         ];
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-golongan-darahs.view') ?? false;
+    }
+
+    public static function canViewAny(): bool
+    {
+        return static::shouldRegisterNavigation();
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-golongan-darahs.create') ?? false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-golongan-darahs.edit') ?? false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-golongan-darahs.delete') ?? false;
+    }
 }

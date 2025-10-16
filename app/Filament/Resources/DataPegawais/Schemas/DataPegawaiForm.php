@@ -51,6 +51,8 @@ class DataPegawaiForm
                             ->required()
                             ->minLength(6)
                             ->maxLength(100)
+                            // wajib diisi hanya ketika membuat data baru (halaman “create”), dan tidak wajib ketika mengedit (halaman “edit”).
+                            ->required(fn(?string $context): bool => $context === 'create')
                             ->placeholder('Masukkan password'),
 
                         TextInput::make('email')

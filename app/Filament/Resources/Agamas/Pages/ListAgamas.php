@@ -17,6 +17,7 @@ class ListAgamas extends ListRecords
                 ->label('Add Agama')
                 ->icon('heroicon-m-plus')
                 ->color('primary')
+                ->visible(fn () => auth()->user()?->hasPermission('agamas.create') ?? false)
                 ->form(fn ($form) => AgamaResource::form($form))
                 ->modalHeading('Add New Agama')
                 ->modalSubmitActionLabel('Save Agama')

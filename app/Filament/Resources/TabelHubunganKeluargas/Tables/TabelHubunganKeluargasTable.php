@@ -53,7 +53,8 @@ class TabelHubunganKeluargasTable
                     ->modalSubmitActionLabel('Save Changes')
                     ->modalCancelActionLabel('Cancel')
                     ->successNotificationTitle('Hubungan keluarga updated successfully!')
-                    ->after(fn() => redirect()->to(TabelHubunganKeluargaResource::getUrl('index'))),
+                    ->after(fn() => redirect()->to(TabelHubunganKeluargaResource::getUrl('index')))
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-hubungan-keluargas.edit') ?? false),
                 DeleteAction::make()
                     ->label('Delete')
                     ->icon('heroicon-m-trash')
@@ -62,7 +63,8 @@ class TabelHubunganKeluargasTable
                     ->modalHeading('Delete Hubungan Keluarga')
                     ->modalDescription('Are you sure you want to delete this hubungan keluarga? This action cannot be undone.')
                     ->modalSubmitActionLabel('Yes, delete it')
-                    ->modalCancelActionLabel('Cancel'),
+                    ->modalCancelActionLabel('Cancel')
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-hubungan-keluargas.delete') ?? false),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -74,7 +76,8 @@ class TabelHubunganKeluargasTable
                         ->modalHeading('Delete Selected Hubungan Keluarga')
                         ->modalDescription('Are you sure you want to delete the selected hubungan keluarga? This action cannot be undone.')
                         ->modalSubmitActionLabel('Yes, delete them')
-                        ->modalCancelActionLabel('Cancel'),
+                        ->modalCancelActionLabel('Cancel')
+                        ->visible(fn () => auth()->user()?->hasPermission('tabel-hubungan-keluargas.delete') ?? false),
                 ]),
             ]);
     }

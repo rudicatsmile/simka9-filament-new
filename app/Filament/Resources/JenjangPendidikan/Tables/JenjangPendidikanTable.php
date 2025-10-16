@@ -28,7 +28,7 @@ class JenjangPendidikanTable
                     ->sortable(),
                 BadgeColumn::make('status')
                     ->label('Status')
-                    ->formatStateUsing(fn (string $state): string => $state === '1' ? 'Active' : 'Inactive')
+                    ->formatStateUsing(fn(string $state): string => $state === '1' ? 'Active' : 'Inactive')
                     ->colors([
                         'success' => '1',
                         'danger' => '0',
@@ -47,12 +47,13 @@ class JenjangPendidikanTable
                     ->label('Edit')
                     ->icon('heroicon-m-pencil-square')
                     ->color('warning')
-                    ->form(fn (Schema $schema) => JenjangPendidikanResource::form($schema))
+                    ->form(fn(Schema $schema) => JenjangPendidikanResource::form($schema))
                     ->modalHeading('Edit Jenjang Pendidikan')
                     ->modalSubmitActionLabel('Save Changes')
                     ->modalCancelActionLabel('Cancel')
                     ->successNotificationTitle('Jenjang Pendidikan updated successfully!')
-                    ->after(fn () => redirect()->to(JenjangPendidikanResource::getUrl('index'))),
+                    ->after(fn() => redirect()->to(JenjangPendidikanResource::getUrl('index')))
+                    ->visible(fn() => auth()->user()?->hasPermission('jenjang-pendidikan.edit') ?? false),
                 DeleteAction::make()
                     ->label('Delete')
                     ->icon('heroicon-m-trash')
@@ -61,7 +62,8 @@ class JenjangPendidikanTable
                     ->modalHeading('Delete Jenjang Pendidikan')
                     ->modalDescription('Are you sure you want to delete this jenjang pendidikan? This action cannot be undone.')
                     ->modalSubmitActionLabel('Yes, delete it')
-                    ->modalCancelActionLabel('Cancel'),
+                    ->modalCancelActionLabel('Cancel')
+                    ->visible(fn() => auth()->user()?->hasPermission('jenjang-pendidikan.delete') ?? false),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -73,7 +75,8 @@ class JenjangPendidikanTable
                         ->modalHeading('Delete Selected Jenjang Pendidikan')
                         ->modalDescription('Are you sure you want to delete the selected jenjang pendidikan? This action cannot be undone.')
                         ->modalSubmitActionLabel('Yes, delete them')
-                        ->modalCancelActionLabel('Cancel'),
+                        ->modalCancelActionLabel('Cancel')
+                        ->visible(fn() => auth()->user()?->hasPermission('jenjang-pendidikan.delete') ?? false),
                 ]),
             ]);
     }

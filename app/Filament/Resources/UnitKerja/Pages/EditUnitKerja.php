@@ -13,7 +13,8 @@ class EditUnitKerja extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->visible(fn () => auth()->user()?->hasPermission('unit-kerja.delete') ?? false),
         ];
     }
 }

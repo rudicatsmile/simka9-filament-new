@@ -81,7 +81,8 @@ class TabelStatusNikahsTable
                     ->modalSubmitActionLabel('Save Changes')
                     ->modalCancelActionLabel('Cancel')
                     ->successNotificationTitle('Status Nikah updated successfully!')
-                    ->after(fn () => redirect()->to(TabelStatusNikahResource::getUrl('index'))),
+                    ->after(fn () => redirect()->to(TabelStatusNikahResource::getUrl('index')))
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-status-nikahs.edit') ?? false),
                 DeleteAction::make()
                     ->label('Delete')
                     ->icon('heroicon-m-trash')
@@ -90,7 +91,8 @@ class TabelStatusNikahsTable
                     ->modalHeading('Delete Status Nikah')
                     ->modalDescription('Are you sure you want to delete this status nikah? This action cannot be undone.')
                     ->modalSubmitActionLabel('Yes, delete it')
-                    ->modalCancelActionLabel('Cancel'),
+                    ->modalCancelActionLabel('Cancel')
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-status-nikahs.delete') ?? false),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -102,7 +104,8 @@ class TabelStatusNikahsTable
                         ->modalHeading('Delete Selected Status Nikah')
                         ->modalDescription('Are you sure you want to delete the selected status nikah? This action cannot be undone.')
                         ->modalSubmitActionLabel('Yes, delete them')
-                        ->modalCancelActionLabel('Cancel'),
+                        ->modalCancelActionLabel('Cancel')
+                        ->visible(fn () => auth()->user()?->hasPermission('tabel-status-nikahs.delete') ?? false),
                 ]),
             ]);
     }

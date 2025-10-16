@@ -17,6 +17,7 @@ use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CwspsRoleResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Schemas\Components\Fieldset;
 
 class CwspsRoleResource extends Resource
 {
@@ -32,30 +33,35 @@ class CwspsRoleResource extends Resource
     {
         return $schema
             ->schema([
-                Section::make('Informasi Role')
+                Section::make('Informasi Role & Permissions')
                     ->schema([
-                        Forms\Components\TextInput::make('name')
-                            ->label('Nama Role')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('identifier')
-                            ->label('Identifier')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\Toggle::make('status')
-                            ->label('Status')
-                            ->default(true)
-                            ->required(),
+                        Fieldset::make('Informasi Role')
+                            ->schema([
+                                Forms\Components\TextInput::make('name')
+                                    ->label('Nama Role')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('identifier')
+                                    ->label('Identifier')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\Toggle::make('status')
+                                    ->label('Status')
+                                    ->default(true)
+                                    ->required(),
+                            ])
+                        ,
+
+                        Fieldset::make('Permissions')
+                            ->schema([
+                                Forms\Components\CheckboxList::make('permissions')
+                                    ->label('Pilih Permissions')
+                                    ->relationship('permissions', 'name')
+                                    ->options(CwspsPermission::pluck('name', 'id'))
+                                ,
+                            ]),
                     ])
-                    ->columns(2),
-                Section::make('Permissions')
-                    ->schema([
-                        Forms\Components\CheckboxList::make('permissions')
-                            ->label('Pilih Permissions')
-                            ->relationship('permissions', 'name')
-                            ->options(CwspsPermission::pluck('name', 'id'))
-                            ->columns(2),
-                    ]),
+                ,
             ]);
     }
 
@@ -74,10 +80,10 @@ class CwspsRoleResource extends Resource
                     ->counts('permissions'),
                 Tables\Columns\BadgeColumn::make('status')
                     ->label('Status')
-                    ->formatStateUsing(fn ($state) => $state ? 'Active' : 'Inactive')
+                    ->formatStateUsing(fn($state) => $state ? 'Active' : 'Inactive')
                     ->colors([
-                        'success' => fn ($state) => (bool) $state === true,
-                        'danger' => fn ($state) => (bool) $state === false,
+                        'success' => fn($state) => (bool) $state === true,
+                        'danger' => fn($state) => (bool) $state === false,
                     ]),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
@@ -123,5 +129,34 @@ class CwspsRoleResource extends Resource
             'create' => Pages\CreateCwspsRole::route('/create'),
             'edit' => Pages\EditCwspsRole::route('/{record}/edit'),
         ];
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('roles.view') ?? false;
+    }
+
+    public static function canViewAny(): bool
+    {
+        return static::shouldRegisterNavigation();
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('roles.create') ?? false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('roles.edit') ?? false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('roles.delete') ?? false;
     }
 }

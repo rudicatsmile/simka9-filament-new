@@ -17,7 +17,7 @@ use Filament\Tables\Table;
 
 /**
  * Filament Resource untuk JabatanUtama
- * 
+ *
  * Resource ini mengelola CRUD operations untuk model JabatanUtama
  * dalam admin panel Filament
  */
@@ -26,10 +26,10 @@ class JabatanUtamaResource extends Resource
     protected static ?string $model = JabatanUtama::class;
 
     protected static ?string $navigationLabel = 'Jabatan Utama';
-    
-    protected static string | UnitEnum | null $navigationGroup = 'Master Data';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-briefcase';
+    protected static string|UnitEnum|null $navigationGroup = 'Master Data';
+
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-briefcase';
 
     /**
      * Konfigurasi form untuk resource
@@ -77,5 +77,34 @@ class JabatanUtamaResource extends Resource
             // 'create' => CreateJabatanUtama::route('/create'), // Commented out - using modal instead
             // 'edit' => EditJabatanUtama::route('/{record}/edit'), // Commented out - using modal instead
         ];
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('jabatan-utamas.view') ?? false;
+    }
+
+    public static function canViewAny(): bool
+    {
+        return static::shouldRegisterNavigation();
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = auth()->user();  //jabatan-utamass.create
+        return $user?->hasPermission('jabatan-utamas.create') ?? false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('jabatan-utamas.edit') ?? false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('jabatan-utamas.delete') ?? false;
     }
 }

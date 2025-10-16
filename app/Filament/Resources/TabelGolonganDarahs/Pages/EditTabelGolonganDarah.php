@@ -13,7 +13,8 @@ class EditTabelGolonganDarah extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->visible(fn () => auth()->user()?->hasPermission('tabel-golongan-darahs.delete') ?? false),
         ];
     }
 }

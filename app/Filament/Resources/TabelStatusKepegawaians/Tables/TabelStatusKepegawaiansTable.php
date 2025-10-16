@@ -68,11 +68,13 @@ class TabelStatusKepegawaiansTable
                     ->native(false),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-status-kepegawaians.edit') ?? false),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->visible(fn () => auth()->user()?->hasPermission('tabel-status-kepegawaians.delete') ?? false),
                 ]),
             ])
             ->defaultSort('urut', 'asc');

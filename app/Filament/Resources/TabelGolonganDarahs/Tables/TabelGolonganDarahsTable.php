@@ -65,7 +65,8 @@ class TabelGolonganDarahsTable
                     ->modalSubmitActionLabel('Save Changes')
                     ->modalCancelActionLabel('Cancel')
                     ->successNotificationTitle('Golongan Darah updated successfully!')
-                    ->after(fn() => redirect()->to(TabelGolonganDarahResource::getUrl('index'))),
+                    ->after(fn() => redirect()->to(TabelGolonganDarahResource::getUrl('index')))
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-golongan-darahs.edit') ?? false),
                 DeleteAction::make()
                     ->label('Delete')
                     ->icon('heroicon-m-trash')
@@ -74,7 +75,8 @@ class TabelGolonganDarahsTable
                     ->modalHeading('Delete Golongan Darah')
                     ->modalDescription('Are you sure you want to delete this golongan darah? This action cannot be undone.')
                     ->modalSubmitActionLabel('Yes, delete it')
-                    ->modalCancelActionLabel('Cancel'),
+                    ->modalCancelActionLabel('Cancel')
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-golongan-darahs.delete') ?? false),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -86,7 +88,8 @@ class TabelGolonganDarahsTable
                         ->modalHeading('Delete Selected Golongan Darah')
                         ->modalDescription('Are you sure you want to delete the selected golongan darah? This action cannot be undone.')
                         ->modalSubmitActionLabel('Yes, delete them')
-                        ->modalCancelActionLabel('Cancel'),
+                        ->modalCancelActionLabel('Cancel')
+                        ->visible(fn () => auth()->user()?->hasPermission('tabel-golongan-darahs.delete') ?? false),
                 ]),
             ]);
     }

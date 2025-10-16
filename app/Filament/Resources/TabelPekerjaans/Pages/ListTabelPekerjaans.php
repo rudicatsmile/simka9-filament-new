@@ -18,22 +18,13 @@ use Filament\Resources\Pages\ListRecords;
  */
 class ListTabelPekerjaans extends ListRecords
 {
-    /**
-     * Resource yang digunakan oleh halaman ini
-     * 
-     * @var string
-     */
     protected static string $resource = TabelPekerjaanResource::class;
 
-    /**
-     * Mendapatkan aksi header untuk halaman ini
-     * 
-     * @return array
-     */
     protected function getHeaderActions(): array
     {
         return [
             CreateAction::make()
+                ->visible(fn () => auth()->user()?->hasPermission('tabel-pekerjaan.create') ?? false)
                 ->label('Add Pekerjaan')
                 ->icon('heroicon-m-plus')
                 ->color('primary')

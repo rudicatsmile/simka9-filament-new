@@ -68,7 +68,8 @@ class TabelJenisPelatihansTable
                     ->modalSubmitActionLabel('Save Changes')
                     ->modalCancelActionLabel('Cancel')
                     ->successNotificationTitle('Jenis Pelatihan updated successfully!')
-                    ->after(fn () => redirect()->to(TabelJenisPelatihanResource::getUrl('index'))),
+                    ->after(fn () => redirect()->to(TabelJenisPelatihanResource::getUrl('index')))
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-jenis-pelatihans.edit') ?? false),
                 DeleteAction::make()
                     ->label('Delete')
                     ->icon('heroicon-m-trash')
@@ -77,7 +78,8 @@ class TabelJenisPelatihansTable
                     ->modalHeading('Delete Jenis Pelatihan')
                     ->modalDescription('Are you sure you want to delete this jenis pelatihan? This action cannot be undone.')
                     ->modalSubmitActionLabel('Yes, delete it')
-                    ->modalCancelActionLabel('Cancel'),
+                    ->modalCancelActionLabel('Cancel')
+                    ->visible(fn () => auth()->user()?->hasPermission('tabel-jenis-pelatihans.delete') ?? false),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -89,7 +91,8 @@ class TabelJenisPelatihansTable
                         ->modalHeading('Delete Selected Jenis Pelatihans')
                         ->modalDescription('Are you sure you want to delete the selected jenis pelatihans? This action cannot be undone.')
                         ->modalSubmitActionLabel('Yes, delete them')
-                        ->modalCancelActionLabel('Cancel'),
+                        ->modalCancelActionLabel('Cancel')
+                        ->visible(fn () => auth()->user()?->hasPermission('tabel-jenis-pelatihans.delete') ?? false),
                 ]),
             ]);
     }

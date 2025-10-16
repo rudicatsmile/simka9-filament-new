@@ -6,19 +6,83 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
-
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        //
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\Agama::class,
+            \App\Policies\AgamaPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\Book::class,
+            \App\Policies\BookPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\User::class,
+            \App\Policies\UserPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\TabelPropinsi::class,
+            \App\Policies\TabelPropinsiPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\TabelGolonganDarah::class,
+            \App\Policies\TabelGolonganDarahPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\TabelJenisPelatihan::class,
+            \App\Policies\TabelJenisPelatihanPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\TabelPekerjaan::class,
+            \App\Policies\TabelPekerjaanPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\TabelStatusNikah::class,
+            \App\Policies\TabelStatusNikahPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\TabelStatusKepegawaian::class,
+            \App\Policies\TabelStatusKepegawaianPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\TabelHubunganKeluarga::class,
+            \App\Policies\TabelHubunganKeluargaPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\JenjangPendidikan::class,
+            \App\Policies\JenjangPendidikanPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\JabatanUtama::class,
+            \App\Policies\JabatanUtamaPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\UnitKerja::class,
+            \App\Policies\UnitKerjaPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\DataPegawai::class,
+            \App\Policies\DataPegawaiPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\DataPasangan::class,
+            \App\Policies\DataPasanganPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\DataAnak::class,
+            \App\Policies\DataAnakPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\DataPendidikan::class,
+            \App\Policies\DataPendidikanPolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\CwspsRole::class,
+            \App\Policies\CwspsRolePolicy::class
+        );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\CwspsPermission::class,
+            \App\Policies\CwspsPermissionPolicy::class
+        );
     }
 }

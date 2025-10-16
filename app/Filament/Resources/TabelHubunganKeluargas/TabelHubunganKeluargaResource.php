@@ -50,4 +50,33 @@ class TabelHubunganKeluargaResource extends Resource
             // 'edit' => EditTabelHubunganKeluarga::route('/{record}/edit'), // Commented out - using modal instead
         ];
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-hubungan-keluargas.view') ?? false;
+    }
+
+    public static function canViewAny(): bool
+    {
+        return static::shouldRegisterNavigation();
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-hubungan-keluargas.create') ?? false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-hubungan-keluargas.edit') ?? false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-hubungan-keluargas.delete') ?? false;
+    }
 }

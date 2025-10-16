@@ -98,4 +98,33 @@ class TabelJenisPelatihanResource extends Resource
             'index' => ListTabelJenisPelatihans::route('/'),
         ];
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-jenis-pelatihans.view') ?? false;
+    }
+
+    public static function canViewAny(): bool
+    {
+        return static::shouldRegisterNavigation();
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-jenis-pelatihans.create') ?? false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-jenis-pelatihans.edit') ?? false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        $user = auth()->user();
+        return $user?->hasPermission('tabel-jenis-pelatihans.delete') ?? false;
+    }
 }

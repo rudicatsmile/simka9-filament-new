@@ -14,6 +14,7 @@ class ListBooks extends ListRecords
     {
         return [
             CreateAction::make()
+                ->visible(fn () => auth()->user()?->hasPermission('books.create') ?? false)
                 ->label('Add Book')
                 ->icon('heroicon-m-plus')
                 ->color('primary')

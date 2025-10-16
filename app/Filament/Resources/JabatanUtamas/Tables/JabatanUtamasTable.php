@@ -101,6 +101,8 @@ class JabatanUtamasTable
                     ->successNotificationTitle('Jabatan Utama updated successfully!')
                     ->after(fn() => redirect()->to(JabatanUtamaResource::getUrl('index'))),
                 DeleteAction::make()
+                    ->visible(fn() => auth()->user()?->hasPermission('jabatan-utamas.edit') ?? false),
+                DeleteAction::make()
                     ->label('Delete')
                     ->icon('heroicon-m-trash')
                     ->color('danger')
@@ -108,7 +110,8 @@ class JabatanUtamasTable
                     ->modalHeading('Delete Jabatan Utama')
                     ->modalDescription('Are you sure you want to delete this jabatan utama? This action cannot be undone.')
                     ->modalSubmitActionLabel('Yes, delete it')
-                    ->modalCancelActionLabel('Cancel'),
+                    ->modalCancelActionLabel('Cancel')
+                    ->visible(fn() => auth()->user()?->hasPermission('jabatan-utamas.delete') ?? false),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -120,7 +123,8 @@ class JabatanUtamasTable
                         ->modalHeading('Delete Selected Jabatan Utama')
                         ->modalDescription('Are you sure you want to delete the selected jabatan utama? This action cannot be undone.')
                         ->modalSubmitActionLabel('Yes, delete them')
-                        ->modalCancelActionLabel('Cancel'),
+                        ->modalCancelActionLabel('Cancel')
+                        ->visible(fn() => auth()->user()?->hasPermission('jabatan-utamas.delete') ?? false),
                 ]),
             ]);
     }

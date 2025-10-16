@@ -13,7 +13,8 @@ class EditCwspsRole extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()
+                ->visible(fn () => auth()->user()?->hasPermission('roles.delete') ?? false),
         ];
     }
 }

@@ -19,11 +19,13 @@ class DataPendidikansTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->visible(fn () => auth()->user()?->hasPermission('data-pendidikans.edit') ?? false),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->visible(fn () => auth()->user()?->hasPermission('data-pendidikans.delete') ?? false),
                 ]),
             ]);
     }

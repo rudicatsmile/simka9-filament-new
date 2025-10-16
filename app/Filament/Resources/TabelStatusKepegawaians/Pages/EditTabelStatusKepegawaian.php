@@ -13,7 +13,8 @@ class EditTabelStatusKepegawaian extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->visible(fn () => auth()->user()?->hasPermission('tabel-status-kepegawaians.delete') ?? false),
         ];
     }
 }

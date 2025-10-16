@@ -14,15 +14,16 @@ class ListJenjangPendidikan extends ListRecords
     {
         return [
             CreateAction::make()
+                ->visible(fn() => auth()->user()?->hasPermission('jenjang-pendidikan.create') ?? false)
                 ->label('Add Jenjang Pendidikan')
                 ->icon('heroicon-m-plus')
                 ->color('primary')
-                ->form(fn ($form) => JenjangPendidikanResource::form($form))
+                ->form(fn($form) => JenjangPendidikanResource::form($form))
                 ->modalHeading('Add New Jenjang Pendidikan')
                 ->modalSubmitActionLabel('Save Jenjang Pendidikan')
                 ->modalCancelActionLabel('Cancel')
                 ->successNotificationTitle('Jenjang Pendidikan created successfully!')
-                ->after(fn () => redirect()->to(JenjangPendidikanResource::getUrl('index'))),
+                ->after(fn() => redirect()->to(JenjangPendidikanResource::getUrl('index'))),
         ];
     }
 }

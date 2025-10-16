@@ -19,11 +19,13 @@ class DataPasangansTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->visible(fn () => auth()->user()?->hasPermission('data-pasangans.edit') ?? false),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->visible(fn () => auth()->user()?->hasPermission('data-pasangans.delete') ?? false),
                 ]),
             ]);
     }

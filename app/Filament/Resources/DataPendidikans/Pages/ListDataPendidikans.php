@@ -13,7 +13,8 @@ class ListDataPendidikans extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->visible(fn() => auth()->user()?->hasPermission('data-pendidikans.create') ?? false),
         ];
     }
 }

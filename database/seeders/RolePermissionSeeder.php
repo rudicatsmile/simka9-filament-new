@@ -113,6 +113,67 @@ class RolePermissionSeeder extends Seeder
                 'panel_ids' => ['admin'],
                 'status' => true,
             ],
+
+            //Book
+            [
+                'name' => 'Lihat Buku',
+                'identifier' => 'books.view',
+                'route' => 'filament.admin.resources.books.index',
+                'panel_ids' => ['admin'],
+                'status' => true,
+            ],
+            [
+                'name' => 'Buat Buku',
+                'identifier' => 'books.create',
+                'route' => 'filament.admin.resources.books.create',
+                'panel_ids' => ['admin'],
+                'status' => true,
+            ],
+            [
+                'name' => 'Edit Buku',
+                'identifier' => 'books.edit',
+                'route' => 'filament.admin.resources.books.edit',
+                'panel_ids' => ['admin'],
+                'status' => true,
+            ],
+            [
+                'name' => 'Hapus Buku',
+                'identifier' => 'books.delete',
+                'route' => 'filament.admin.resources.books.delete',
+                'panel_ids' => ['admin'],
+                'status' => true,
+            ],
+
+            //Agama
+            [
+                'name' => 'Lihat Agama',
+                'identifier' => 'agamas.view',
+                'route' => 'filament.admin.resources.agamas.index',
+                'panel_ids' => ['admin'],
+                'status' => true,
+            ],
+            [
+                'name' => 'Buat Agama',
+                'identifier' => 'agamas.create',
+                'route' => 'filament.admin.resources.agamas.create',
+                'panel_ids' => ['admin'],
+                'status' => true,
+            ],
+            [
+                'name' => 'Edit Agama',
+                'identifier' => 'agamas.edit',
+                'route' => 'filament.admin.resources.agamas.edit',
+                'panel_ids' => ['admin'],
+                'status' => true,
+            ],
+            [
+                'name' => 'Hapus Agama',
+                'identifier' => 'agamas.delete',
+                'route' => 'filament.admin.resources.agamas.delete',
+                'panel_ids' => ['admin'],
+                'status' => true,
+            ],
+            //
         ];
 
         foreach ($permissions as $permission) {
@@ -166,8 +227,12 @@ class RolePermissionSeeder extends Seeder
                     case 'admin':
                         // Admin dapat mengakses semua kecuali role dan permission management
                         $adminPermissions = CwspsPermission::whereNotIn('identifier', [
-                            'roles.create', 'roles.edit', 'roles.delete',
-                            'permissions.create', 'permissions.edit', 'permissions.delete'
+                            'roles.create',
+                            'roles.edit',
+                            'roles.delete',
+                            'permissions.create',
+                            'permissions.edit',
+                            'permissions.delete'
                         ])->pluck('id');
                         $role->permissions()->sync($adminPermissions);
                         break;
@@ -176,8 +241,11 @@ class RolePermissionSeeder extends Seeder
                         // Manager dapat mengakses user management dan dashboard
                         $managerPermissions = CwspsPermission::whereIn('identifier', [
                             'dashboard.view',
-                            'users.view', 'users.create', 'users.edit',
-                            'roles.view', 'permissions.view'
+                            'users.view',
+                            'users.create',
+                            'users.edit',
+                            'roles.view',
+                            'permissions.view'
                         ])->pluck('id');
                         $role->permissions()->sync($managerPermissions);
                         break;
