@@ -34,19 +34,11 @@ class DataRiwayatSertifikasisTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('pegawai.nik')
-                    ->label('NIK')
-                    ->searchable()
-                    ->sortable(),
+                // TextColumn::make('pegawai.nik')
+                //     ->label('NIK')
+                //     ->searchable()
+                //     ->sortable(),
 
-                IconColumn::make('is_sertifikasi')
-                    ->label('Status')
-                    ->boolean()
-                    ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
-                    ->trueColor('success')
-                    ->falseColor('danger')
-                    ->alignCenter(),
 
                 TextColumn::make('nama')
                     ->label('Nama Sertifikasi')
@@ -80,19 +72,28 @@ class DataRiwayatSertifikasisTable
                     ->alignCenter()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('urut')
-                    ->label('Urutan')
-                    ->sortable()
-                    ->alignCenter(),
+                // TextColumn::make('urut')
+                //     ->label('Urutan')
+                //     ->sortable()
+                //     ->alignCenter(),
 
-                IconColumn::make('berkas')
-                    ->label('Berkas')
+                // IconColumn::make('berkas')
+                //     ->label('Berkas')
+                //     ->boolean()
+                //     ->trueIcon('heroicon-o-document-text')
+                //     ->falseIcon('heroicon-o-x-mark')
+                //     ->trueColor('success')
+                //     ->falseColor('gray')
+                //     ->getStateUsing(fn($record) => !empty($record->berkas))
+                //     ->alignCenter(),
+
+                IconColumn::make('is_sertifikasi')
+                    ->label('Status')
                     ->boolean()
-                    ->trueIcon('heroicon-o-document-text')
-                    ->falseIcon('heroicon-o-x-mark')
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
                     ->trueColor('success')
-                    ->falseColor('gray')
-                    ->getStateUsing(fn($record) => !empty($record->berkas))
+                    ->falseColor('danger')
                     ->alignCenter(),
 
                 TextColumn::make('created_at')
@@ -108,17 +109,55 @@ class DataRiwayatSertifikasisTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('nik_data_pegawai')
-                    ->label('Pegawai')
-                    ->options(
-                        DataPegawai::query()
-                            ->orderBy('nama_lengkap')
-                            ->pluck('nama_lengkap', 'nik')
-                            ->toArray()
-                    )
-                    ->searchable()
-                    ->preload(),
+                \Filament\Tables\Filters\Filter::make('unit_kerja_pegawai')
+                    ->form([
+                        \Filament\Forms\Components\Select::make('unit_kerja')
+                            ->label('Unit Kerja')
+                            ->options(
+                                \App\Models\UnitKerja::query()
+                                    ->orderBy('urut')
+                                    ->pluck('nama_unit_kerja', 'kode')
+                            )
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->afterStateUpdated(function (callable $set) {
+                                $set('data_pegawai', null);
+                            }),
 
+                        \Filament\Forms\Components\Select::make('data_pegawai')
+                            ->label('Data Pegawai')
+                            ->options(function (callable $get) {
+                                $unitKerjaKode = $get('unit_kerja');
+
+                                $query = \App\Models\DataPegawai::query()
+                                    ->select('nik', 'nip', 'nama_lengkap');
+
+                                if ($unitKerjaKode) {
+                                    $query->where('kode_unit_kerja', $unitKerjaKode);
+                                }
+
+                                return $query->orderBy('nama_lengkap')
+                                    ->get()
+                                    ->mapWithKeys(function ($pegawai) {
+                                        return [$pegawai->nik => $pegawai->nama_lengkap . ' (' . $pegawai->nip . ')'];
+                                    })
+                                    ->toArray();
+                            })
+                            ->searchable()
+                            ->preload(),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when($data['unit_kerja'] ?? null, function ($query, $kodeUnitKerja) {
+                                $query->whereHas('pegawai', function ($query) use ($kodeUnitKerja) {
+                                    $query->where('kode_unit_kerja', $kodeUnitKerja);
+                                });
+                            })
+                            ->when($data['data_pegawai'] ?? null, function ($query, $nikPegawai) {
+                                $query->where('nik_data_pegawai', $nikPegawai);
+                            });
+                    }),
                 SelectFilter::make('is_sertifikasi')
                     ->label('Status Sertifikasi')
                     ->options([
