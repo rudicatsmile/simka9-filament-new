@@ -84,5 +84,9 @@ class AppServiceProvider extends ServiceProvider
             \App\Models\CwspsPermission::class,
             \App\Policies\CwspsPermissionPolicy::class
         );
+        \Illuminate\Support\Facades\Gate::policy(
+            \App\Models\RiwayatPendidikan::class,
+            \App\Policies\RiwayatPendidikanPolicy::class
+        );
     }
 }

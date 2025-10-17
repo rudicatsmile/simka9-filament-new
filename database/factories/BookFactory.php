@@ -20,6 +20,8 @@ class BookFactory extends Factory
             //add faker for title,author,description
             'title' => $this->faker->sentence(3),
             'author' => $this->faker->name,
+            //add image url
+            'image' => $this->faker->imageUrl(640, 480, 'books', true),
             'description' => $this->faker->paragraph(3),
 
         ];

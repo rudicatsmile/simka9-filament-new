@@ -31,4 +31,14 @@ class JenjangPendidikan extends Model
     {
         $this->attributes['status'] = (string) $value;
     }
+
+    /**
+     * Relasi ke riwayat pendidikan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function riwayatPendidikan()
+    {
+        return $this->hasMany(RiwayatPendidikan::class, 'kode_jenjang_pendidikan', 'kode');
+    }
 }

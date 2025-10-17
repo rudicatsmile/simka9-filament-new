@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\CwspsRole;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -23,11 +24,21 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+
+        $adminRole = CwspsRole::where('identifier', 'user')->first();
+
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'email' => fake()->randomElement([
+                'rudi@admin.com',
+                'alip@admin.com',
+                'apit@admin.com',
+                'kiki@admin.com',
+                'adit@admin.com',
+            ]),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'role_id' => $adminRole?->id, // assign UUID role jika ada
+            'password' => 'admin',
             'remember_token' => Str::random(10),
         ];
     }
@@ -37,7 +48,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

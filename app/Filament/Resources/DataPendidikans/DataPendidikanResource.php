@@ -54,7 +54,8 @@ class DataPendidikanResource extends Resource
     public static function shouldRegisterNavigation(): bool
     {
         $user = auth()->user();
-        return $user?->hasPermission('data-pendidikans.view') ?? false;
+        // return $user?->hasPermission('data-pendidikans.view') ?? false;
+        return false;
     }
 
     public static function canViewAny(): bool

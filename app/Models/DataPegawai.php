@@ -303,6 +303,16 @@ class DataPegawai extends Model
     }
 
     /**
+     * Relasi ke riwayat pendidikan
+     *
+     * @return HasMany
+     */
+    public function riwayatPendidikan(): HasMany
+    {
+        return $this->hasMany(RiwayatPendidikan::class, 'nik_data_pegawai', 'nip');
+    }
+
+    /**
      * Scope untuk pegawai yang tidak diblokir
      *
      * @param \Illuminate\Database\Eloquent\Builder $query

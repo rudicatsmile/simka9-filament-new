@@ -55,6 +55,7 @@ class RolePermissionSeederV2 extends Seeder
             ['label' => 'Unit Kerja',         'prefix' => 'unit-kerja',               'route' => 'filament.admin.resources.unit-kerja.index'],
             ['label' => 'Status Kepegawaian', 'prefix' => 'tabel-status-kepegawaians','route' => 'filament.admin.resources.tabel-status-kepegawaians.index'],
             ['label' => 'Status Nikah',       'prefix' => 'tabel-status-nikahs',      'route' => 'filament.admin.resources.tabel-status-nikahs.index'],
+            ['label' => 'Riwayat Pendidikan', 'prefix' => 'riwayat-pendidikans',      'route' => 'filament.admin.resources.riwayat-pendidikans.index'],
         ];
 
         foreach ($resources as $res) {

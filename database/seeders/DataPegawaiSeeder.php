@@ -31,7 +31,7 @@ class DataPegawaiSeeder extends Seeder
                 'kode_golongan_darah' => '001',
                 'kode_status_nikah' => '002',
                 'pstatus' => '1',
-                'kode_status_kepegawaian' => '001',
+                'kode_status_kepegawaian' => 'PTY',
                 'blokir' => 'Tidak',
                 'alamat' => 'Jl. Merdeka No. 123, Jakarta Pusat',
                 'kode_propinsi' => '31',
@@ -60,6 +60,6 @@ class DataPegawaiSeeder extends Seeder
         }
 
         // Create additional random data
-        //DataPegawai::factory()->count(7)->create();
+        DataPegawai::factory()->count(14)->create();
     }
 }
