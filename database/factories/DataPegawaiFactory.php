@@ -39,7 +39,7 @@ class DataPegawaiFactory extends Factory
             'kode_golongan_darah' => $this->faker->randomElement(['001', '002', '003', '004']),
             'kode_status_nikah' => $this->faker->randomElement(['001', '002', '003', '004']),
             'pstatus' => $this->faker->randomElement(['1', '0']),
-            'kode_status_kepegawaian' => $this->faker->randomElement(['PTY', 'GTTY', 'GTY']),
+            'kode_status_kepegawaian' => $this->faker->randomElement(['001', '002', '003']),
             'blokir' => $this->faker->randomElement(['Tidak', 'Ya']),
             'alamat' => $this->faker->address(),
             'kode_propinsi' => $this->faker->randomElement(['31', '32', '33', '34', '35']),
