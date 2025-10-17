@@ -29,13 +29,7 @@ class UserFactory extends Factory
 
         return [
             'name' => fake()->name(),
-            'email' => fake()->randomElement([
-                'rudi@admin.com',
-                'alip@admin.com',
-                'apit@admin.com',
-                'kiki@admin.com',
-                'adit@admin.com',
-            ]),
+            'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'role_id' => $adminRole?->id, // assign UUID role jika ada
             'password' => 'admin',

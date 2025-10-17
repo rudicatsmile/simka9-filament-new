@@ -48,3 +48,8 @@ Route::get('data-riwayat-pasangan/employee/{nik}', [DataRiwayatPasanganControlle
 // Data Riwayat Kepegawaian API Routes
 Route::apiResource('data-riwayat-kepegawaian', \App\Http\Controllers\Api\DataRiwayatKepegawaianController::class);
 Route::get('data-riwayat-kepegawaian/{dataRiwayatKepegawaian}/download-berkas', [\App\Http\Controllers\Api\DataRiwayatKepegawaianController::class, 'downloadBerkas']);
+
+// Data Riwayat Sertifikasi API Routes
+Route::apiResource('data-riwayat-sertifikasi', \App\Http\Controllers\Api\DataRiwayatSertifikasiController::class);
+Route::get('data-riwayat-sertifikasi/{dataRiwayatSertifikasi}/download-berkas', [\App\Http\Controllers\Api\DataRiwayatSertifikasiController::class, 'downloadBerkas']);
+Route::get('data-riwayat-sertifikasi/employee/{nik}', [\App\Http\Controllers\Api\DataRiwayatSertifikasiController::class, 'getByEmployee']);
