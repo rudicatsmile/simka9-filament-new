@@ -25,7 +25,7 @@ class DataRiwayatAnakResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Data Pegawai';
+    protected static string|UnitEnum|null $navigationGroup = 'Riwayat Pegawai';
 
     protected static ?string $navigationLabel = 'Data Anak';
 
@@ -33,7 +33,7 @@ class DataRiwayatAnakResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Data Anak';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {

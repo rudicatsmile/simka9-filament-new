@@ -25,6 +25,9 @@ class DataRiwayatPasanganResource extends Resource
 
     protected static ?string $navigationLabel = 'Data Riwayat Pasangan';
 
+    protected static ?int $navigationSort = 3;
+
+
     public static function form(Schema $schema): Schema
     {
         return DataRiwayatPasanganForm::configure($schema);

@@ -25,6 +25,9 @@ class RiwayatPendidikanResource extends Resource
 
     protected static ?string $navigationLabel = 'Data Riwayat Pendidikan';
 
+    protected static ?int $navigationSort = 4;
+
+
 
 
     public static function form(Schema $schema): Schema
